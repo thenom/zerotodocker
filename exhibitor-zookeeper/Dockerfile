@@ -14,15 +14,16 @@
 
 FROM netflixoss/java:7
 MAINTAINER Netflix Open Source Development <talent@netflix.com>
+ARG ZOOKEEPER_VERSION=3.4.13
 
 RUN apt-get update &&\
   apt-get -y install ca-certificates &&\
-  wget -q http://archive.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz.md5 &&\
-  wget -q http://archive.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz &&\
-  md5sum -c zookeeper-3.4.6.tar.gz.md5 &&\
-  tar xzf zookeeper-3.4.6.tar.gz &&\
-  rm /zookeeper-3.4.6.tar.gz* &&\
-  mv /zookeeper-3.4.6 /zookeeper
+  wget -q http://archive.apache.org/dist/zookeeper/zookeeper-$ZOOKEEPER_VERSION/zookeeper-$ZOOKEEPER_VERSION.tar.gz.md5 &&\
+  wget -q http://archive.apache.org/dist/zookeeper/zookeeper-$ZOOKEEPER_VERSION/zookeeper-$ZOOKEEPER_VERSION.tar.gz &&\
+  md5sum -c zookeeper-$ZOOKEEPER_VERSION.tar.gz.md5 &&\
+  tar xzf zookeeper-$ZOOKEEPER_VERSION.tar.gz &&\
+  rm /zookeeper-$ZOOKEEPER_VERSION.tar.gz* &&\
+  mv /zookeeper-$ZOOKEEPER_VERSION /zookeeper
   
 RUN apt-get -y install maven &&\
   mkdir /exhibitor &&\
