@@ -15,6 +15,7 @@
 FROM netflixoss/java:7
 MAINTAINER Netflix Open Source Development <talent@netflix.com>
 ARG ZOOKEEPER_VERSION=3.4.13
+ARG EXHIBITOR_VERSION=1.6.0
 USER root
 
 RUN apt-get update &&\
@@ -36,7 +37,7 @@ RUN cd /exhibitor &&\
   mvn clean package
 
 RUN cd /exhibitor &&\
-  mv target/exhibitor-1.6.0.jar ./ &&\
+  mv target/exhibitor-$EXHIBITOR_VERSION.jar ./exhibitor.jar &&\
   rm -rf /exhibitor/target &&\
   rm /exhibitor/pom.xml
   
@@ -46,4 +47,4 @@ EXPOSE 2181 2888 3888 8080
 
 WORKDIR /exhibitor
 
-ENTRYPOINT ["java", "-jar", "exhibitor-1.6.0-shaded.jar", "-c", "file"]
+ENTRYPOINT ["java", "-jar", "exhibitor.jar", "-c", "file"]
